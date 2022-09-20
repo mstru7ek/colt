@@ -9,3 +9,9 @@ Copy of the [Colt](https://dst.lbl.gov/ACSSoftware/colt/) linear algebra library
 Create your own binary version.
 
     $ ./gradlew jar
+	
+	
+## Fork Details
+
+Transposed operations with foreach, additional parameter for tolerance on numeric zero values.
+
