@@ -31,6 +31,8 @@ import cern.colt.matrix.impl.DenseDoubleMatrix2D;
  * @version 1.0, 09/24/99
  */
 public abstract class DoubleMatrix2D extends AbstractMatrix2D {
+
+	public static boolean TOLERANCE = false;
 	/**
 	 * Makes this class non instantiable, but still let's others inherit from it.
 	 */

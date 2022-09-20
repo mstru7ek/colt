@@ -231,7 +231,7 @@ class SelectedSparseDoubleMatrix2D extends DoubleMatrix2D {
 		//manually inlined:
 		int index = offset + rowOffsets[rowZero + row * rowStride] + columnOffsets[columnZero + column * columnStride];
 
-		if (value == 0)
+		if (value == 0 && !TOLERANCE)
 			this.elements.removeKey(index);
 		else
 			this.elements.put(index, value);

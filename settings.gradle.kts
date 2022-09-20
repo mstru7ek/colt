@@ -5,4 +5,4 @@ pluginManagement {
 	}
 }
 
-rootProject.name = "colt"
+rootProject.name = "colt-c"

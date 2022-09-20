@@ -10,6 +10,7 @@
  */
 package cern.colt.matrix.impl;
 
+import cern.colt.function.IntIntDoubleFunction;
 import cern.colt.map.AbstractIntDoubleMap;
 import cern.colt.map.OpenIntDoubleHashMap;
 import cern.colt.matrix.DoubleMatrix1D;
@@ -299,9 +300,27 @@ public class SparseDoubleMatrix2D extends DoubleMatrix2D {
 				}
 			);
 		} else {
-			super.forEachNonZero(function);
+			if(TOLERANCE) {
+				forEachPairTransposed(function);
+			} else {
+				super.forEachNonZero(function);
+			}
 		}
 		return this;
+	}
+
+	private void forEachPairTransposed(IntIntDoubleFunction function) {
+		this.elements.forEachPair(
+			new cern.colt.function.IntDoubleProcedure() {
+				public boolean apply(int key, double value) {
+					int i = key / rows;
+					int j = key % rows;
+					double r = function.apply(j, i, value);
+					if (r != value) elements.put(key, r);
+					return true;
+				}
+			}
+		);
 	}
 
 	/**
@@ -411,8 +430,9 @@ public class SparseDoubleMatrix2D extends DoubleMatrix2D {
 		//manually inlined:
 		int index = rowZero + row * rowStride + columnZero + column * columnStride;
 
+
 		//if (value == 0 || Math.abs(value) < TOLERANCE)
-		if (value == 0)
+		if (value == 0 && !TOLERANCE)
 			this.elements.removeKey(index);
 		else
 			this.elements.put(index, value);
